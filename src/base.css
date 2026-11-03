@@ -4,12 +4,21 @@
   font-weight: 300 900;
 }
 
+:root {
+  --color-background: #f9f9f9;
+}
+
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+html {
+  scrollbar-gutter: stable;
+}
+
 body {
+  background-color: var(--color-background);
   font-family: Rubik, system-ui;
 }
