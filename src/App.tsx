@@ -1,5 +1,7 @@
 import { useScreen } from "@/hooks/useScreen";
 
+import MainMenu from "@/components/MainMenu/MainMenu";
+
 import "./App.css";
 
 export default function App() {
@@ -7,7 +9,7 @@ export default function App() {
 
   return (
     <div className="app">
-      {screen === "main-menu" && <div>Main Menu</div>}
+      {screen === "main-menu" && <MainMenu setScreen={setScreen} />}
 
       {screen === "game" && <div>Game</div>}
 

@@ -6,6 +6,14 @@
 
 :root {
   --color-background: #f9f9f9;
+  --color-yellow: #fc0;
+  --color-blue-dark: #037;
+  --color-white: #fff;
+  --color-gray-dark: #555;
+
+  --shadow-raised: 2px 2px 8px rgb(0 0 0 / 50%);
+
+  --radius-pill: 25px;
 }
 
 *, *::before, *::after {
@@ -21,4 +29,13 @@ html {
 body {
   background-color: var(--color-background);
   font-family: Rubik, system-ui;
+}
+
+button {
+  background: none;
+  border: none;
+  color: inherit;
+  -webkit-tap-highlight-color: transparent;
+  font: inherit;
+  cursor: pointer;
 }

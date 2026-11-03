@@ -1,0 +1,60 @@
+.main-menu {
+  min-height: calc(100dvh - 1rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+}
+
+.main-menu__title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  text-transform: uppercase;
+}
+
+.main-menu__pokemon {
+  color: var(--color-yellow);
+  -webkit-text-stroke: 2px var(--color-blue-dark);
+  font-size: 3.5rem;
+}
+
+.main-menu__memory-game {
+  color: var(--color-blue-dark);
+  font-size: 2rem;
+}
+
+.main-menu__actions {
+  width: min(100%, 500px);
+  padding-block: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  border-block: 2px solid;
+  border-image-source: linear-gradient(to right, transparent, var(--color-gray-dark) 50%, transparent);
+  border-image-slice: 1;
+}
+
+.main-menu__button {
+  width: 200px;
+  height: 50px;
+  padding-left: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--color-white);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-raised);
+}
+
+.main-menu__icon {
+  width: 32px;
+  height: 32px;
+}
+
+.main-menu__label {
+  font-weight: 600;
+}
