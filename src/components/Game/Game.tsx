@@ -3,6 +3,8 @@ import { useState } from "react";
 import type { Screen } from "@/types/screen";
 import type { Difficulty, Game } from "@/types/game";
 
+import LoadingScreen from "@/components/Game/LoadingScreen/LoadingScreen";
+
 import "./Game.css";
 import icons from "@/assets/icons/icons.svg";
 
@@ -53,6 +55,8 @@ export default function Game({ setScreen }: GameProps) {
           </div>
         </div>
       )}
+
+      {game === "loading" && <LoadingScreen />}
     </div>
   );
 }
