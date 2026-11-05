@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import type { Screen } from "@/types/screen";
-import type { Difficulty, Game } from "@/types/game";
+import type { Difficulty, Face, Game } from "@/types/game";
 import type { Pokemon } from "@/types/pokemon";
 
 import pokemons from "@/data/pokemons.json";
@@ -26,6 +26,27 @@ export default function Game({ setScreen }: GameProps) {
   const [game, setGame] = useState<Game>("difficulty");
   const [difficulty, setDifficulty] = useState<Difficulty | null>(null);
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
+  const [face, setFace] = useState<Face>("closed");
+  const [selected, setSelected] = useState<number[]>([]);
+
+  useEffect(() => {
+    if (game !== "playing") return;
+
+    if (face === "closed") {
+      const timers = [
+        setTimeout(() => setPokemons(pokemons => shuffle(pokemons)), 800),
+        setTimeout(() => setFace("animating"), 1000)
+      ];
+
+      return () => timers.forEach(timer => clearTimeout(timer));
+    }
+
+    if (face === "animating") {
+      const timer = setTimeout(() => setFace("open"), 700);
+
+      return () => clearTimeout(timer);
+    }
+  }, [game, face]);
 
   function newGame(difficulty: Difficulty) {
     setDifficulty(difficulty);
@@ -35,6 +56,11 @@ export default function Game({ setScreen }: GameProps) {
 
     setPokemons(pokemons);
     setTimeout(() => setGame("playing"), 1000);
+  }
+
+  function selectCard(id: number) {
+    setSelected([...selected, id]);
+    setFace("closed");
   }
 
   return (
@@ -71,7 +97,7 @@ export default function Game({ setScreen }: GameProps) {
       {(game === "playing" || game === "won" || game === "lost") && (
         <div className="game__cards">
           {pokemons.map(pokemon => (
-            <Card key={pokemon.id} pokemon={pokemon} />
+            <Card key={pokemon.id} pokemon={pokemon} face={face} selectCard={selectCard} />
           ))}
         </div>
       )}
@@ -91,4 +117,16 @@ function getRandomPokemon(count: number): Pokemon[] {
   }
 
   return ids.map(id => pokemons[id]);
+}
+
+function shuffle(pokemons: Pokemon[]): Pokemon[] {
+  const shuffled = [...pokemons];
+
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+
+  return shuffled;
 }

@@ -4,3 +4,5 @@ export type Difficulty = {
   level: "easy" | "medium" | "hard";
   cards: number;
 };
+
+export type Face = "closed" | "animating" | "open";

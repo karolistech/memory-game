@@ -1,15 +1,22 @@
 import type { Pokemon } from "@/types/pokemon";
+import type { Face } from "@/types/game";
 
 import icons from "@/assets/icons/icons.svg";
 import cardBack from "@/assets/images/card-back.webp";
 
 type CardProps = {
   pokemon: Pokemon;
+  face: Face;
+  selectCard: (id: number) => void;
 };
 
-export default function Card({ pokemon }: CardProps) {
+export default function Card({ pokemon, face, selectCard }: CardProps) {
   return (
-    <div className="card">
+    <button
+      className={getCardClassName(face)}
+      onClick={() => selectCard(pokemon.id)}
+      disabled={face !== "open"}
+    >
       <div className="card__inner">
         <div className="card__face card__face--back">
           <img src={cardBack} alt="Pokémon card back" className="card__back-image" />
@@ -31,6 +38,14 @@ export default function Card({ pokemon }: CardProps) {
           </div>
         </div>
       </div>
-    </div>
+    </button>
   );
+}
+
+function getCardClassName(face: Face): string {
+  const base = "card";
+  const open = (face === "animating" || face === "open") && "card--open";
+  const interactive = face === "open" && "card--interactive";
+
+  return [base, open, interactive].filter(Boolean).join(" ");
 }
