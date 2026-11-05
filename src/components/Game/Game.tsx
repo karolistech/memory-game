@@ -2,8 +2,12 @@ import { useState } from "react";
 
 import type { Screen } from "@/types/screen";
 import type { Difficulty, Game } from "@/types/game";
+import type { Pokemon } from "@/types/pokemon";
+
+import pokemons from "@/data/pokemons.json";
 
 import LoadingScreen from "@/components/Game/LoadingScreen/LoadingScreen";
+import Card from "@/components/Game/Card/Card";
 
 import "./Game.css";
 import icons from "@/assets/icons/icons.svg";
@@ -21,10 +25,16 @@ const difficulties: Difficulty[] = [
 export default function Game({ setScreen }: GameProps) {
   const [game, setGame] = useState<Game>("difficulty");
   const [difficulty, setDifficulty] = useState<Difficulty | null>(null);
+  const [pokemons, setPokemons] = useState<Pokemon[]>([]);
 
   function newGame(difficulty: Difficulty) {
     setDifficulty(difficulty);
     setGame("loading");
+
+    const pokemons = getRandomPokemon(difficulty.cards);
+
+    setPokemons(pokemons);
+    setTimeout(() => setGame("playing"), 1000);
   }
 
   return (
@@ -57,6 +67,28 @@ export default function Game({ setScreen }: GameProps) {
       )}
 
       {game === "loading" && <LoadingScreen />}
+
+      {(game === "playing" || game === "won" || game === "lost") && (
+        <div className="game__cards">
+          {pokemons.map(pokemon => (
+            <Card key={pokemon.id} pokemon={pokemon} />
+          ))}
+        </div>
+      )}
     </div>
   );
+}
+
+function getRandomPokemon(count: number): Pokemon[] {
+  const ids: number[] = [];
+
+  while (ids.length < count) {
+    const id = Math.floor(Math.random() * pokemons.length);
+
+    if (!ids.includes(id)) {
+      ids.push(id);
+    }
+  }
+
+  return ids.map(id => pokemons[id]);
 }

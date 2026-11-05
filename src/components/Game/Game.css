@@ -71,3 +71,95 @@
   width: 24px;
   height: 24px;
 }
+
+.game__cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 160px));
+  justify-content: center;
+  gap: 1.5rem 1rem;
+
+  .card {
+    container-type: inline-size;
+    aspect-ratio: 5 / 7;
+    perspective: 1000px;
+  }
+
+  .card__inner {
+    position: relative;
+    height: 100%;
+    /* transform: rotateY(180deg); */
+    transform-style: preserve-3d;
+    transition: transform 0.8s ease;
+  }
+
+  .card__face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    padding: 5cqw;
+    border-radius: 5cqw;
+    box-shadow: var(--shadow-card-outer);
+  }
+
+  .card__face--back {
+    background-color: var(--color-card-back);
+  }
+
+  .card__face--front {
+    transform: rotateY(180deg);
+    background-color: var(--color-white);
+  }
+
+  .card__back-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 2.5cqw;
+  }
+
+  .card__content {
+    height: 100%;
+    padding: 2.5cqw;
+    display: flex;
+    flex-direction: column;
+    gap: 5cqw;
+    background-image: var(--card-background);
+    background-color: var(--color-type);
+    border-radius: 2.5cqw;
+    box-shadow: var(--shadow-card-inner);
+  }
+
+  .card__header {
+    padding: 2.5cqw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .card__name {
+    font-size: 7.5cqw;
+    font-weight: 500;
+  }
+
+  .card__type-icon {
+    width: 12.5cqw;
+    aspect-ratio: 1 / 1;
+    padding: 2.5cqw;
+    background-color: var(--color-card-type);
+    border-radius: var(--radius-circle);
+    box-shadow: var(--shadow-card-type);
+    color: var(--color-white);
+  }
+
+  .card__body {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    border: 2cqw solid var(--color-white);
+    box-shadow: var(--shadow-card-inner);
+  }
+
+  .card__front-image {
+    width: 100%;
+    filter: var(--shadow-card-image);
+  }
+}
