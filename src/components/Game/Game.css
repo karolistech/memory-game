@@ -72,6 +72,35 @@
   height: 24px;
 }
 
+.game__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.game__title {
+  color: var(--color-yellow);
+  -webkit-text-stroke: 2px var(--color-blue-dark);
+  font-size: clamp(1rem, 9vw, 3rem);
+  text-transform: uppercase;
+}
+
+.game__header-button {
+  width: clamp(32px, 10vw, 48px);
+  aspect-ratio: 1 / 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-white);
+  border-radius: var(--radius-circle);
+  box-shadow: var(--shadow-raised);
+}
+
+.game__header-icon {
+  width: 50%;
+  height: 50%;
+}
+
 .game__cards {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 160px));

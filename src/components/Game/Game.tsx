@@ -95,11 +95,29 @@ export default function Game({ setScreen }: GameProps) {
       {game === "loading" && <LoadingScreen />}
 
       {(game === "playing" || game === "won" || game === "lost") && (
-        <div className="game__cards">
-          {pokemons.map(pokemon => (
-            <Card key={pokemon.id} pokemon={pokemon} face={face} selectCard={selectCard} />
-          ))}
-        </div>
+        <>
+          <header className="game__header">
+            <button className="game__header-button" onClick={() => setScreen("main-menu")}>
+              <svg className="game__header-icon">
+                <use href={`${icons}#arrow-left`} />
+              </svg>
+            </button>
+
+            <h1 className="game__title">Memory Game</h1>
+
+            <button className="game__header-button">
+              <svg className="game__header-icon">
+                <use href={`${icons}#question-mark`} />
+              </svg>
+            </button>
+          </header>
+
+          <div className="game__cards">
+            {pokemons.map(pokemon => (
+              <Card key={pokemon.id} pokemon={pokemon} face={face} selectCard={selectCard} />
+            ))}
+          </div>
+        </>
       )}
     </div>
   );
