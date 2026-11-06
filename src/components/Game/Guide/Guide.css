@@ -1,0 +1,109 @@
+.game {
+  .guide__backdrop {
+    position: fixed;
+    z-index: 1;
+    inset: 0;
+    background-color: var(--color-backdrop);
+  }
+
+  .guide {
+    position: fixed;
+    z-index: 2;
+    width: min(95%, 750px);
+    max-height: calc(100dvh - 2rem);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 1rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    overflow-y: auto;
+    background-color: var(--color-white);
+    border-radius: var(--radius-md);
+    scrollbar-width: thin;
+  }
+
+  .guide__title {
+    color: var(--color-yellow);
+    -webkit-text-stroke: 2px var(--color-blue-dark);
+    font-size: clamp(2rem, 10vw, 2.5rem);
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .guide__introduction {
+    line-height: 1.5;
+  }
+
+  .guide__steps {
+    counter-reset: step;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    list-style-type: none;
+  }
+
+  .guide__step {
+    counter-increment: step;
+    position: relative;
+    padding: 1rem;
+    border: 1px solid var(--color-gray-dark);
+    border-radius: var(--radius-md);
+  }
+
+  .guide__step::before {
+    content: counter(step);
+    position: absolute;
+    top: -0.75rem;
+    left: -0.75rem;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-gray-dark);
+    border-radius: var(--radius-circle);
+    color: var(--color-white);
+  }
+
+  .guide__step-title {
+    margin-bottom: 0.25rem;
+    color: var(--color-blue-dark);
+  }
+
+  .guide__step-text {
+    line-height: 1.5;
+  }
+
+  .guide__levels {
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    border: 1px solid var(--color-gray);
+    border-radius: var(--radius-md);
+  }
+
+  .guide__button {
+    flex-shrink: 0;
+    width: 150px;
+    height: 50px;
+    align-self: center;
+    border-radius: var(--radius-pill);
+    box-shadow: var(--shadow-raised);
+  }
+
+  @media (min-width: 768px) {
+    .guide__steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .guide__step--wide {
+      grid-column: span 2;
+    }
+  }
+}

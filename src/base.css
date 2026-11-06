@@ -6,6 +6,7 @@
 
 :root {
   --color-background: #f9f9f9;
+  --color-backdrop: rgb(0 0 0 / 70%);
   --color-yellow: #fc0;
   --color-blue: #59d;
   --color-blue-dark: #037;
@@ -28,6 +29,7 @@
   --shadow-card-image: drop-shadow(1cqw 2cqw 2.5cqw rgb(0 0 0 / 50%));
 
   --radius-sm: 4px;
+  --radius-md: 8px;
   --radius-pill: 25px;
   --radius-circle: 50%;
 }

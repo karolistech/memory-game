@@ -7,6 +7,7 @@ import type { Pokemon } from "@/types/pokemon";
 import pokemons from "@/data/pokemons.json";
 
 import LoadingScreen from "@/components/Game/LoadingScreen/LoadingScreen";
+import Guide from "@/components/Game/Guide/Guide";
 import Card from "@/components/Game/Card/Card";
 
 import "./Game.css";
@@ -28,6 +29,7 @@ export default function Game({ setScreen }: GameProps) {
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
   const [face, setFace] = useState<Face>("closed");
   const [selected, setSelected] = useState<number[]>([]);
+  const [guide, setGuide] = useState<boolean>(false);
 
   useEffect(() => {
     if (game !== "playing") return;
@@ -61,6 +63,14 @@ export default function Game({ setScreen }: GameProps) {
   function selectCard(id: number) {
     setSelected([...selected, id]);
     setFace("closed");
+  }
+
+  function openGuide() {
+    setGuide(true);
+  }
+
+  function closeGuide() {
+    setGuide(false);
   }
 
   return (
@@ -105,12 +115,14 @@ export default function Game({ setScreen }: GameProps) {
 
             <h1 className="game__title">Memory Game</h1>
 
-            <button className="game__header-button">
+            <button className="game__header-button" onClick={openGuide}>
               <svg className="game__header-icon">
                 <use href={`${icons}#question-mark`} />
               </svg>
             </button>
           </header>
+
+          {guide && <Guide closeGuide={closeGuide} /> }
 
           <div className="game__cards">
             {pokemons.map(pokemon => (
