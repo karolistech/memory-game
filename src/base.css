@@ -11,6 +11,7 @@
   --color-blue: #59d;
   --color-blue-dark: #037;
   --color-white: #fff;
+  --color-black: #000;
   --color-gray: #ccc;
   --color-gray-dark: #555;
   --color-green: #5b0;
@@ -28,6 +29,7 @@
   --shadow-card-inner: inset 0 0 5cqw rgb(0 0 0 / 50%);
   --shadow-card-type: 0 0 5cqw var(--color-white);
   --shadow-card-image: drop-shadow(1cqw 2cqw 2.5cqw rgb(0 0 0 / 50%));
+  --shadow-card-hover: drop-shadow(0 0 6px rgb(0 0 0 / 25%));
 
   --radius-sm: 4px;
   --radius-md: 8px;

@@ -160,7 +160,7 @@ export default function Game({ setScreen }: GameProps) {
               </svg>
             </button>
 
-            <h1 className="game__title">Memory Game</h1>
+            <h1 className="game__title">Game</h1>
 
             <button className="game__header-button" onClick={openGuide}>
               <svg className="game__header-icon">
@@ -182,7 +182,7 @@ export default function Game({ setScreen }: GameProps) {
             </span>
           </div>
 
-          <div className="game__cards">
+          <div className={`game__cards game__cards--${pokemons.length}`}>
             {pokemons.map(pokemon => (
               <Card key={pokemon.id} pokemon={pokemon} face={face} selectCard={selectCard} />
             ))}
@@ -191,7 +191,7 @@ export default function Game({ setScreen }: GameProps) {
           {game === "won" && (
             <div className="game__outcome">
               <h2 className="game__outcome-title">You won!</h2>
-              <p className="game__outcome-message">You remembered every Pokémon!</p>
+              <p>You remembered every Pokémon!</p>
 
               <button
                 className="game__outcome-button game__outcome-button--next-game"
@@ -212,7 +212,8 @@ export default function Game({ setScreen }: GameProps) {
           {game === "lost" && (
             <div className="game__outcome">
               <h2 className="game__outcome-title">Game over!</h2>
-              <p className="game__outcome-message">You picked the same Pokémon twice!</p>
+              <p>You picked the same Pokémon twice!</p>
+              <p>Score: {score}</p>
 
               <button
                 className="game__outcome-button game__outcome-button--retry"

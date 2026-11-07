@@ -81,7 +81,7 @@
 .game__title {
   color: var(--color-yellow);
   -webkit-text-stroke: 2px var(--color-blue-dark);
-  font-size: clamp(1rem, 9vw, 3rem);
+  font-size: clamp(1rem, 10vw, 3rem);
   text-transform: uppercase;
 }
 
@@ -133,8 +133,9 @@
 }
 
 .game__cards {
+  padding-block: 1rem;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 160px));
+  grid-template-columns: repeat(2, minmax(0, 180px));
   justify-content: center;
   gap: 1.5rem 1rem;
 
@@ -143,6 +144,7 @@
     aspect-ratio: 5 / 7;
     perspective: 1000px;
     cursor: default;
+    transition: transform 0.2s ease, filter 0.2s ease;
   }
 
   .card--open .card__inner {
@@ -166,7 +168,6 @@
     backface-visibility: hidden;
     padding: 5cqw;
     border-radius: 5cqw;
-    box-shadow: var(--shadow-card-outer);
   }
 
   .card__face--back {
@@ -176,6 +177,7 @@
   .card__face--front {
     transform: rotateY(180deg);
     background-color: var(--color-white);
+    box-shadow: var(--shadow-card-outer);
   }
 
   .card__back-image {
@@ -230,6 +232,13 @@
     width: 100%;
     filter: var(--shadow-card-image);
   }
+
+  @media (hover: hover) and (pointer: fine) {
+    .card--interactive:hover {
+      transform: translateY(-5px);
+      filter: var(--shadow-card-hover);
+    }
+  }
 }
 
 .game__outcome {
@@ -242,15 +251,11 @@
   justify-content: center;
   gap: 1rem;
   background-color: var(--color-backdrop);
+  color: var(--color-white);
 }
 
 .game__outcome-title {
-  color: var(--color-white);
   font-size: 3rem;
-}
-
-.game__outcome-message {
-  color: var(--color-white);
 }
 
 .game__outcome-button {
@@ -259,6 +264,7 @@
   height: 50px;
   background-color: var(--color-white);
   border-radius: var(--radius-pill);
+  color: var(--color-black);
   font-weight: 600;
 }
 
@@ -287,4 +293,16 @@
   border: 3px solid var(--color-red);
   border-radius: inherit;
   box-shadow: inset 0 0 3px var(--color-red);
+}
+
+@media (min-width: 600px) {
+  .game__cards {
+    grid-template-columns: repeat(4, minmax(0, 180px));
+  }
+}
+
+@media (min-width: 1024px) {
+  .game__cards--12 {
+    grid-template-columns: repeat(6, minmax(0, 180px));
+  }
 }
