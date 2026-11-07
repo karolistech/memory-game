@@ -60,8 +60,46 @@ export default function Game({ setScreen }: GameProps) {
     setTimeout(() => setGame("playing"), 1000);
   }
 
+  function nextGame() {
+    if (difficulty === null) return;
+
+    const index = difficulties.indexOf(difficulty);
+    const updatedDifficulty = difficulties[index + 1] ?? difficulty;
+
+    setDifficulty(updatedDifficulty);
+    setGame("loading");
+    setFace("closed");
+    setSelected([]);
+
+    const pokemons = getRandomPokemon(updatedDifficulty.cards);
+
+    setPokemons(pokemons);
+    setTimeout(() => setGame("playing"), 1000);
+  }
+
+  function retryGame() {
+    setFace("closed");
+    setSelected([]);
+    setGame("playing");
+  }
+
   function selectCard(id: number) {
-    setSelected([...selected, id]);
+    if (game !== "playing") return;
+
+    if (selected.includes(id)) {
+      setGame("lost");
+      return;
+    }
+
+    const updatedSelected = [...selected, id];
+
+    setSelected(updatedSelected);
+
+    if (updatedSelected.length === pokemons.length) {
+      setGame("won");
+      return;
+    }
+
     setFace("closed");
   }
 
@@ -129,6 +167,48 @@ export default function Game({ setScreen }: GameProps) {
               <Card key={pokemon.id} pokemon={pokemon} face={face} selectCard={selectCard} />
             ))}
           </div>
+
+          {game === "won" && (
+            <div className="game__outcome">
+              <h2 className="game__outcome-title">You won!</h2>
+              <p className="game__outcome-message">You remembered every Pokémon!</p>
+
+              <button
+                className="game__outcome-button game__outcome-button--next-game"
+                onClick={nextGame}
+              >
+                Next Game
+              </button>
+
+              <button
+                className="game__outcome-button game__outcome-button--main-menu"
+                onClick={() => setScreen("main-menu")}
+              >
+                Main Menu
+              </button>
+            </div>
+          )}
+
+          {game === "lost" && (
+            <div className="game__outcome">
+              <h2 className="game__outcome-title">Game over!</h2>
+              <p className="game__outcome-message">You picked the same Pokémon twice!</p>
+
+              <button
+                className="game__outcome-button game__outcome-button--retry"
+                onClick={retryGame}
+              >
+                Retry
+              </button>
+
+              <button
+                className="game__outcome-button game__outcome-button--main-menu"
+                onClick={() => setScreen("main-menu")}
+              >
+                Main Menu
+              </button>
+            </div>
+          )}
         </>
       )}
     </div>

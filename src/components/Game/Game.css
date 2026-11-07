@@ -200,3 +200,60 @@
     filter: var(--shadow-card-image);
   }
 }
+
+.game__outcome {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  background-color: var(--color-backdrop);
+}
+
+.game__outcome-title {
+  color: var(--color-white);
+  font-size: 3rem;
+}
+
+.game__outcome-message {
+  color: var(--color-white);
+}
+
+.game__outcome-button {
+  position: relative;
+  width: 150px;
+  height: 50px;
+  background-color: var(--color-white);
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+}
+
+.game__outcome-button--next-game::after {
+  content: "";
+  position: absolute;
+  inset: var(--radius-sm);
+  border: 3px solid var(--color-blue);
+  border-radius: inherit;
+  box-shadow: inset 0 0 3px var(--color-blue);
+}
+
+.game__outcome-button--retry::after {
+  content: "";
+  position: absolute;
+  inset: var(--radius-sm);
+  border: 3px solid var(--color-green);
+  border-radius: inherit;
+  box-shadow: inset 0 0 3px var(--color-green);
+}
+
+.game__outcome-button--main-menu::after {
+  content: "";
+  position: absolute;
+  inset: var(--radius-sm);
+  border: 3px solid var(--color-red);
+  border-radius: inherit;
+  box-shadow: inset 0 0 3px var(--color-red);
+}
