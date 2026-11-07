@@ -29,6 +29,8 @@ export default function Game({ setScreen }: GameProps) {
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
   const [face, setFace] = useState<Face>("closed");
   const [selected, setSelected] = useState<number[]>([]);
+  const [score, setScore] = useState<number>(0);
+  const [bestScore, setBestScore] = useState<number>(0);
   const [guide, setGuide] = useState<boolean>(false);
 
   useEffect(() => {
@@ -80,6 +82,7 @@ export default function Game({ setScreen }: GameProps) {
   function retryGame() {
     setFace("closed");
     setSelected([]);
+    setScore(0);
     setGame("playing");
   }
 
@@ -92,8 +95,14 @@ export default function Game({ setScreen }: GameProps) {
     }
 
     const updatedSelected = [...selected, id];
+    const updatedScore = score + 1;
 
     setSelected(updatedSelected);
+    setScore(updatedScore);
+
+    if (updatedScore > bestScore) {
+      setBestScore(updatedScore);
+    }
 
     if (updatedSelected.length === pokemons.length) {
       setGame("won");
@@ -161,6 +170,17 @@ export default function Game({ setScreen }: GameProps) {
           </header>
 
           {guide && <Guide closeGuide={closeGuide} /> }
+
+          <div className="game__scoreboard">
+            <div className="game__scores">
+              <span>Score: {score}</span>
+              <span>Best Score: {bestScore}</span>
+            </div>
+
+            <span className="game__progress">
+              {selected.length} / {pokemons.length}
+            </span>
+          </div>
 
           <div className="game__cards">
             {pokemons.map(pokemon => (
