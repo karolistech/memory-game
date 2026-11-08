@@ -1,0 +1,28 @@
+.collection__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.collection__title {
+  color: var(--color-yellow);
+  -webkit-text-stroke: 2px var(--color-blue-dark);
+  font-size: clamp(1rem, 10vw, 3rem);
+  text-transform: uppercase;
+}
+
+.collection__header-button {
+  width: clamp(16px, 10vw, 48px);
+  aspect-ratio: 1 / 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-white);
+  border-radius: var(--radius-circle);
+  box-shadow: var(--shadow-raised);
+}
+
+.collection__header-icon {
+  width: 50%;
+  height: 50%;
+}
