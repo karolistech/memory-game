@@ -1,4 +1,8 @@
+import { useState } from "react";
+
 import type { Screen } from "@/types/screen";
+
+import Guide from "@/components/Collection/Guide/Guide";
 
 import "./Collection.css";
 import icons from "@/assets/icons/icons.svg";
@@ -8,6 +12,16 @@ type CollectionProps = {
 };
 
 export default function Collection({ setScreen }: CollectionProps) {
+  const [guide, setGuide] = useState<boolean>(false);
+
+  function openGuide() {
+    setGuide(true);
+  }
+
+  function closeGuide() {
+    setGuide(false);
+  }
+
   return (
     <div className="collection">
       <header className="collection__header">
@@ -19,12 +33,14 @@ export default function Collection({ setScreen }: CollectionProps) {
 
         <h1 className="collection__title">Collection</h1>
 
-        <button className="collection__header-button">
+        <button className="collection__header-button" onClick={openGuide}>
           <svg className="collection__header-icon">
             <use href={`${icons}#question-mark`} />
           </svg>
         </button>
       </header>
+
+      {guide && <Guide closeGuide={closeGuide} />}
     </div>
   );
 }
