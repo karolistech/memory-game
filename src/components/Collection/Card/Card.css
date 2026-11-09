@@ -1,0 +1,82 @@
+.collection {
+  .card {
+    container-type: inline-size;
+    aspect-ratio: 5 / 7;
+  }
+
+  .card__face {
+    height: 100%;
+    padding: 5cqw;
+    border-radius: 5cqw;
+    box-shadow: var(--shadow-card-outer);
+  }
+
+  .card__face--back {
+    background-color: var(--color-card-back);
+  }
+
+  .card__face--front {
+    transition: transform 0.2s ease, filter 0.2s ease;
+    background-color: var(--color-white);
+  }
+
+  .card__back-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 2.5cqw;
+  }
+
+  .card__content {
+    height: 100%;
+    padding: 2.5cqw;
+    display: flex;
+    flex-direction: column;
+    gap: 5cqw;
+    background-image: var(--card-background);
+    background-color: var(--color-type);
+    border-radius: 2.5cqw;
+    box-shadow: var(--shadow-card-inner);
+  }
+
+  .card__header {
+    padding: 2.5cqw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .card__name {
+    font-size: 7.5cqw;
+    font-weight: 500;
+  }
+
+  .card__type-icon {
+    width: 12.5cqw;
+    aspect-ratio: 1 / 1;
+    padding: 2.5cqw;
+    background-color: var(--color-card-type);
+    border-radius: var(--radius-circle);
+    box-shadow: var(--shadow-card-type);
+    color: var(--color-white);
+  }
+
+  .card__body {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    border: 2cqw solid var(--color-white);
+    box-shadow: var(--shadow-card-inner);
+  }
+
+  .card__front-image {
+    width: 100%;
+    filter: var(--shadow-card-image);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .card__face--front:hover {
+      transform: translateY(-5px);
+      filter: var(--shadow-card-hover);
+    }
+  }
+}
