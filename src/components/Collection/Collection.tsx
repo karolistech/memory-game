@@ -2,6 +2,8 @@ import { useState } from "react";
 
 import type { Screen } from "@/types/screen";
 
+import { useCollection } from "@/hooks/useCollection";
+
 import pokemons from "@/data/pokemons.json";
 
 import Guide from "@/components/Collection/Guide/Guide";
@@ -15,6 +17,10 @@ type CollectionProps = {
 };
 
 export default function Collection({ setScreen }: CollectionProps) {
+  const { collection, getPokemon } = useCollection();
+
+  console.log(collection.length);
+
   const [guide, setGuide] = useState<boolean>(false);
 
   // const ids = pokemons.map(pokemon => pokemon.id);
@@ -51,7 +57,7 @@ export default function Collection({ setScreen }: CollectionProps) {
       <div className="collection__cards">
         {ids.map(id => (
           // <Card key={id} />
-          <Card key={id} pokemon={pokemons[id - 1]} />
+          <Card key={id} pokemon={getPokemon(id)} />
         ))}
       </div>
     </div>

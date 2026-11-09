@@ -4,7 +4,11 @@ import type { Screen } from "@/types/screen";
 import type { Difficulty, Face, Game } from "@/types/game";
 import type { Pokemon } from "@/types/pokemon";
 
+import { storage } from "@/api/local-storage";
+
 import pokemons from "@/data/pokemons.json";
+
+import { useCollection } from "@/hooks/useCollection";
 
 import LoadingScreen from "@/components/Game/LoadingScreen/LoadingScreen";
 import Guide from "@/components/Game/Guide/Guide";
@@ -30,8 +34,10 @@ export default function Game({ setScreen }: GameProps) {
   const [face, setFace] = useState<Face>("closed");
   const [selected, setSelected] = useState<number[]>([]);
   const [score, setScore] = useState<number>(0);
-  const [bestScore, setBestScore] = useState<number>(0);
+  const [bestScore, setBestScore] = useState<number>(() => storage.getBestScore());
   const [guide, setGuide] = useState<boolean>(false);
+
+  const { unlockPokemon } = useCollection();
 
   useEffect(() => {
     if (game !== "playing") return;
@@ -59,7 +65,7 @@ export default function Game({ setScreen }: GameProps) {
     const pokemons = getRandomPokemon(difficulty.cards);
 
     setPokemons(pokemons);
-    setTimeout(() => setGame("playing"), 1000);
+    setTimeout(() => setGame("playing"), 2000);
   }
 
   function nextGame() {
@@ -76,7 +82,7 @@ export default function Game({ setScreen }: GameProps) {
     const pokemons = getRandomPokemon(updatedDifficulty.cards);
 
     setPokemons(pokemons);
-    setTimeout(() => setGame("playing"), 1000);
+    setTimeout(() => setGame("playing"), 2000);
   }
 
   function retryGame() {
@@ -100,8 +106,11 @@ export default function Game({ setScreen }: GameProps) {
     setSelected(updatedSelected);
     setScore(updatedScore);
 
+    unlockPokemon(id);
+
     if (updatedScore > bestScore) {
       setBestScore(updatedScore);
+      storage.setBestScore(updatedScore);
     }
 
     if (updatedSelected.length === pokemons.length) {
@@ -169,7 +178,7 @@ export default function Game({ setScreen }: GameProps) {
             </button>
           </header>
 
-          {guide && <Guide closeGuide={closeGuide} /> }
+          {guide && <Guide closeGuide={closeGuide} />}
 
           <div className="game__scoreboard">
             <div className="game__scores">
