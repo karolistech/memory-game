@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { type ChangeEvent, useState } from "react";
 
 import type { Screen } from "@/types/screen";
+import type { Filter, PageSize } from "@/types/collection";
 
 import { useCollection } from "@/hooks/useCollection";
 
@@ -19,12 +20,30 @@ type CollectionProps = {
 export default function Collection({ setScreen }: CollectionProps) {
   const { collection, getPokemon } = useCollection();
 
-  console.log(collection.length);
-
+  const [filter, setFilter] = useState<Filter>("all");
+  const [pageSize, setPageSize] = useState<PageSize>(20);
   const [guide, setGuide] = useState<boolean>(false);
 
   // const ids = pokemons.map(pokemon => pokemon.id);
   const ids = Array.from({ length: 20 }, (_, i) => i + 1);
+
+  const filtered = filter === "all" ? ids : ids.filter(id => collection.includes(id));
+
+  function changeFilter(e: ChangeEvent<HTMLSelectElement>) {
+    const value = e.target.value;
+
+    if (value === "all" || value === "collected") {
+      setFilter(value);
+    }
+  }
+
+  function changePageSize(e: ChangeEvent<HTMLSelectElement>) {
+    const value = Number(e.target.value);
+
+    if (value === 20 || value === 40 || value === 60 || value === 100) {
+      setPageSize(value);
+    }
+  }
 
   function openGuide() {
     setGuide(true);
@@ -54,8 +73,42 @@ export default function Collection({ setScreen }: CollectionProps) {
 
       {guide && <Guide closeGuide={closeGuide} />}
 
+      <div className="collection__toolbar">
+        <div className="collection__filter">
+          <select className="collection__select" value={filter} onChange={changeFilter}>
+            <option value="all">All</option>
+            <option value="collected">Collected</option>
+          </select>
+
+          <svg className="collection__select-icon">
+            <use href={`${icons}#chevron`} />
+          </svg>
+        </div>
+
+        <div className="collection__counter">
+          <span>Pokémon Collected</span>
+
+          <span className="collection__counter-value">
+            {collection.length} / {ids.length}
+          </span>
+        </div>
+
+        <div className="collection__page-size">
+          <select className="collection__select" value={pageSize} onChange={changePageSize}>
+            <option value={20}>20</option>
+            <option value={40}>40</option>
+            <option value={60}>60</option>
+            <option value={100}>100</option>
+          </select>
+
+          <svg className="collection__select-icon">
+            <use href={`${icons}#chevron`} />
+          </svg>
+        </div>
+      </div>
+
       <div className="collection__cards">
-        {ids.map(id => (
+        {filtered.map(id => (
           // <Card key={id} />
           <Card key={id} pokemon={getPokemon(id)} />
         ))}
