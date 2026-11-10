@@ -9,6 +9,7 @@ import pokemons from "@/data/pokemons.json";
 
 import Guide from "@/components/Collection/Guide/Guide";
 import Card from "@/components/Collection/Card/Card";
+import Pagination from "@/components/Collection/Pagination/Pagination";
 
 import "./Collection.css";
 import icons from "@/assets/icons/icons.svg";
@@ -22,18 +23,24 @@ export default function Collection({ setScreen }: CollectionProps) {
 
   const [filter, setFilter] = useState<Filter>("all");
   const [pageSize, setPageSize] = useState<PageSize>(20);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [guide, setGuide] = useState<boolean>(false);
 
-  // const ids = pokemons.map(pokemon => pokemon.id);
-  const ids = Array.from({ length: 20 }, (_, i) => i + 1);
+  const ids = pokemons.map(pokemon => pokemon.id);
 
   const filtered = filter === "all" ? ids : ids.filter(id => collection.includes(id));
+
+  const totalPages = Math.ceil(filtered.length / pageSize);
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = currentPage * pageSize;
+  const paginated = filtered.slice(startIndex, endIndex);
 
   function changeFilter(e: ChangeEvent<HTMLSelectElement>) {
     const value = e.target.value;
 
     if (value === "all" || value === "collected") {
       setFilter(value);
+      setCurrentPage(1);
     }
   }
 
@@ -42,7 +49,13 @@ export default function Collection({ setScreen }: CollectionProps) {
 
     if (value === 20 || value === 40 || value === 60 || value === 100) {
       setPageSize(value);
+      setCurrentPage(1);
     }
+  }
+
+  function changePage(page: number) {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0 });
   }
 
   function openGuide() {
@@ -107,12 +120,19 @@ export default function Collection({ setScreen }: CollectionProps) {
         </div>
       </div>
 
-      <div className="collection__cards">
-        {filtered.map(id => (
-          // <Card key={id} />
-          <Card key={id} pokemon={getPokemon(id)} />
-        ))}
-      </div>
+      {paginated.length === 0 ? (
+        <p className="collection__empty">No Pokémon collected yet.</p>
+      ) : (
+        <div className="collection__cards">
+          {paginated.map(id => (
+            <Card key={id} pokemon={getPokemon(id)} />
+          ))}
+        </div>
+      )}
+
+      {totalPages > 1 && (
+        <Pagination currentPage={currentPage} changePage={changePage} totalPages={totalPages} />
+      )}
     </div>
   );
 }

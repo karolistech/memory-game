@@ -85,6 +85,10 @@
   font-weight: 600;
 }
 
+.collection__empty {
+  text-align: center;
+}
+
 .collection__cards {
   padding-block: 1rem;
   display: grid;
