@@ -1,0 +1,108 @@
+.card-modal {
+  width: min(95%, 750px);
+  max-width: none;
+  margin: auto;
+  overflow: visible;
+  border: none;
+  border-radius: var(--radius-md);
+}
+
+.card-modal::backdrop {
+  background-color: var(--color-backdrop);
+}
+
+.card-modal__content {
+  max-height: calc(100dvh - 4rem);
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow-y: auto;
+
+  .card {
+    container-type: inline-size;
+    aspect-ratio: 5 / 7;
+    width: min(100%, 350px);
+  }
+
+  .card__face {
+    height: 100%;
+    padding: 5cqw;
+    border-radius: 5cqw;
+    box-shadow: var(--shadow-card-outer);
+  }
+
+  .card__content {
+    height: 100%;
+    padding: 2.5cqw;
+    display: flex;
+    flex-direction: column;
+    gap: 5cqw;
+    background-image: var(--card-background);
+    background-color: var(--color-type);
+    border-radius: 2.5cqw;
+    box-shadow: var(--shadow-card-inner);
+  }
+
+  .card__header {
+    padding: 2.5cqw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .card__name {
+    font-size: 7.5cqw;
+    font-weight: 500;
+  }
+
+  .card__type-icon {
+    width: 12.5cqw;
+    aspect-ratio: 1 / 1;
+    padding: 2.5cqw;
+    background-color: var(--color-card-type);
+    border-radius: var(--radius-circle);
+    box-shadow: var(--shadow-card-type);
+    color: var(--color-white);
+  }
+
+  .card__body {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    border: 2cqw solid var(--color-white);
+    box-shadow: var(--shadow-card-inner);
+  }
+
+  .card__image {
+    width: 100%;
+    filter: var(--shadow-card-image);
+  }
+}
+
+.card-modal__close-button {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 50%);
+  width: 48px;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-white);
+  border-radius: var(--radius-circle);
+  box-shadow: var(--shadow-raised);
+}
+
+.card-modal__close-icon {
+  width: 50%;
+  height: 50%;
+}
+
+@media (min-width: 768px) {
+  .card-modal__content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

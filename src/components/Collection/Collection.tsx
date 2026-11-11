@@ -2,6 +2,7 @@ import { type ChangeEvent, useState } from "react";
 
 import type { Screen } from "@/types/screen";
 import type { Filter, PageSize } from "@/types/collection";
+import type { Pokemon } from "@/types/pokemon";
 
 import { useCollection } from "@/hooks/useCollection";
 
@@ -9,6 +10,7 @@ import pokemons from "@/data/pokemons.json";
 
 import Guide from "@/components/Collection/Guide/Guide";
 import Card from "@/components/Collection/Card/Card";
+import CardModal from "@/components/Collection/CardModal/CardModal";
 import Pagination from "@/components/Collection/Pagination/Pagination";
 
 import "./Collection.css";
@@ -25,6 +27,7 @@ export default function Collection({ setScreen }: CollectionProps) {
   const [pageSize, setPageSize] = useState<PageSize>(20);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [guide, setGuide] = useState<boolean>(false);
+  const [pokemon, setPokemon] = useState<Pokemon | null>(null);
 
   const ids = pokemons.map(pokemon => pokemon.id);
 
@@ -64,6 +67,10 @@ export default function Collection({ setScreen }: CollectionProps) {
 
   function closeGuide() {
     setGuide(false);
+  }
+
+  function closeCardModal() {
+    setPokemon(null);
   }
 
   return (
@@ -125,10 +132,12 @@ export default function Collection({ setScreen }: CollectionProps) {
       ) : (
         <div className="collection__cards">
           {paginated.map(id => (
-            <Card key={id} pokemon={getPokemon(id)} />
+            <Card key={id} pokemon={getPokemon(id)} setPokemon={setPokemon} />
           ))}
         </div>
       )}
+
+      {pokemon && <CardModal pokemon={pokemon} closeCardModal={closeCardModal} />}
 
       {totalPages > 1 && (
         <Pagination currentPage={currentPage} changePage={changePage} totalPages={totalPages} />

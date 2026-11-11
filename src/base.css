@@ -72,6 +72,11 @@ body {
   font-family: Rubik, system-ui;
 }
 
+body:has(.guide, .card-modal) {
+  overflow: hidden;
+  touch-action: none;
+}
+
 button {
   background: none;
   border: none;
