@@ -15,11 +15,24 @@ export default function CardModal({ pokemon, closeCardModal }: CardModalProps) {
 
   const tiltRange = 40;
 
+  const facts = [
+    { label: "Type", value: pokemon.type.charAt(0).toUpperCase() + pokemon.type.slice(1) },
+    { label: "Height", value: `${pokemon.height.toFixed(2)} m` },
+    { label: "Weight", value: `${pokemon.weight} kg` }
+  ];
+
+  const stats = [
+    { label: "HP", value: pokemon.stats.hp },
+    { label: "Attack", value: pokemon.stats.attack },
+    { label: "Defense", value: pokemon.stats.defense },
+    { label: "Speed", value: pokemon.stats.speed }
+  ];
+
   function openCardModal(dialog: HTMLDialogElement | null) {
     if (dialog) dialog.showModal();
   }
 
-  function handleCardTilt(e: MouseEvent) {
+  function handleCardTilt(e: MouseEvent<HTMLDivElement>) {
     const card = cardRef.current;
 
     if (card === null) return;
@@ -41,6 +54,10 @@ export default function CardModal({ pokemon, closeCardModal }: CardModalProps) {
     if (card === null) return;
 
     card.style.transform = "rotateX(0deg) rotateY(0deg)";
+  }
+
+  function playCry(url: string) {
+    new Audio(url).play();
   }
 
   return (
@@ -65,7 +82,66 @@ export default function CardModal({ pokemon, closeCardModal }: CardModalProps) {
         </div>
 
         <div className="card-details">
-          Card Details
+          <header className="card-details__header">
+            <div className="card-details__identity">
+              <h2 className="card-details__name">{pokemon.name}</h2>
+
+              <span className="card-details__number">
+                Pokédex entry #{String(pokemon.id).padStart(3, "0")}
+              </span>
+            </div>
+
+            <button className="card-details__button" onClick={() => playCry(pokemon.cry)}>
+              <svg className="card-details__icon">
+                <use href={`${icons}#speaker`} />
+              </svg>
+            </button>
+          </header>
+
+          <div className="card-details__section">
+            <h3 className="card-details__section-title">About</h3>
+
+            <p className="card-details__description">{pokemon.description}</p>
+          </div>
+
+          <div className="card-details__section">
+            <h3 className="card-details__section-title">Facts</h3>
+
+            <ul className="card-details__facts">
+              {facts.map(({ label, value }) => (
+                <li key={label} className="card-details__fact">
+                  <span className="card-details__fact-label">{label}</span>
+                  <span className="card-details__fact-value">{value}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="card-details__section">
+            <h3 className="card-details__section-title">Base stats</h3>
+
+            <ul className="card-details__stats">
+              {stats.map(({ label, value }) => (
+                <li key={label} className="card-details__stat">
+                  <span className="card-details__stat-label">{label}</span>
+
+                  <progress className="card-details__stat-bar" value={value} max={150} />
+
+                  <span className="card-details__stat-value">{value}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="card-details__section">
+            <h3 className="card-details__section-title">Abilities</h3>
+
+            <ul className="card-details__abilities">
+              {pokemon.abilities.map(ability => (
+                <li key={ability} className="card-details__ability">{ability}</li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
 
