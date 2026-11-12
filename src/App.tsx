@@ -15,7 +15,7 @@ export default function App() {
 
       {screen === "game" && <Game setScreen={setScreen} />}
 
-      {screen === "collection" && <Collection setScreen={setScreen} /> }
+      {screen === "collection" && <Collection setScreen={setScreen} />}
     </div>
   );
 }

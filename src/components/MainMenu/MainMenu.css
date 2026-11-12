@@ -58,3 +58,65 @@
 .main-menu__label {
   font-weight: 600;
 }
+
+.reset-menu__backdrop {
+  position: fixed;
+  z-index: 1;
+  inset: 0;
+  background-color: var(--color-backdrop);
+}
+
+.reset-menu {
+  position: fixed;
+  z-index: 2;
+  width: min(95%, 450px);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background-color: var(--color-white);
+  border-radius: var(--radius-md);
+}
+
+.reset-menu__warning {
+  color: var(--color-red);
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.reset-menu__question {
+  text-align: center;
+}
+
+.reset-menu__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.reset-menu__button {
+  width: 150px;
+  height: 50px;
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-raised);
+  font-weight: 600;
+}
+
+.reset-menu__button--confirm {
+  position: relative;
+  color: var(--color-red);
+}
+
+.reset-menu__button--confirm::after {
+  content: "";
+  position: absolute;
+  inset: var(--radius-sm);
+  border: 3px solid var(--color-red);
+  border-radius: inherit;
+  box-shadow: inset 0 0 3px var(--color-red);
+}

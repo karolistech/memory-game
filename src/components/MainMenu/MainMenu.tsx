@@ -1,4 +1,8 @@
+import { useState } from "react";
+
 import type { Screen } from "@/types/screen";
+
+import { storage } from "@/api/local-storage";
 
 import "./MainMenu.css";
 import icons from "@/assets/icons/icons.svg";
@@ -8,6 +12,13 @@ type MainMenuProps = {
 };
 
 export default function MainMenu({ setScreen }: MainMenuProps) {
+  const [resetMenu, setResetMenu] = useState<boolean>(false);
+
+  function confirmReset() {
+    storage.reset();
+    setResetMenu(false);
+  }
+
   return (
     <div className="main-menu">
       <h1 className="main-menu__title">
@@ -32,7 +43,7 @@ export default function MainMenu({ setScreen }: MainMenuProps) {
           <span className="main-menu__label">Collection</span>
         </button>
 
-        <button className="main-menu__button">
+        <button className="main-menu__button" onClick={() => setResetMenu(true)}>
           <svg className="main-menu__icon">
             <use href={`${icons}#reset`} />
           </svg>
@@ -40,6 +51,35 @@ export default function MainMenu({ setScreen }: MainMenuProps) {
           <span className="main-menu__label">Reset</span>
         </button>
       </div>
+
+      {resetMenu && (
+        <>
+          <div className="reset-menu__backdrop" />
+
+          <div className="reset-menu">
+            <p className="reset-menu__warning">
+              Your collection and best score will be lost!
+            </p>
+
+            <p className="reset-menu__question">
+              Are you sure you want to reset your progress?
+            </p>
+
+            <div className="reset-menu__actions">
+              <button
+                className="reset-menu__button reset-menu__button--confirm"
+                onClick={confirmReset}
+              >
+                Confirm
+              </button>
+
+              <button className="reset-menu__button" onClick={() => setResetMenu(false)}>
+                Cancel
+              </button>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }

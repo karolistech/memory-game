@@ -192,8 +192,8 @@ export default function Game({ setScreen }: GameProps) {
           </div>
 
           <div className={`game__cards game__cards--${pokemons.length}`}>
-            {pokemons.map(pokemon => (
-              <Card key={pokemon.id} pokemon={pokemon} face={face} selectCard={selectCard} />
+            {pokemons.map((pokemon, index) => (
+              <Card key={index} pokemon={pokemon} face={face} selectCard={selectCard} />
             ))}
           </div>
 

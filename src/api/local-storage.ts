@@ -24,5 +24,10 @@ export const storage = {
 
   setCollection(collection: Collection) {
     localStorage.setItem(keys.collection, JSON.stringify(collection));
+  },
+
+  reset() {
+    localStorage.removeItem(keys.bestScore);
+    localStorage.removeItem(keys.collection);
   }
 };
